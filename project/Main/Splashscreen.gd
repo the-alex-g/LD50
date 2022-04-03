@@ -1,9 +1,7 @@
 extends Control
 
 
-func _on_Button_pressed()->void:
-	get_tree().change_scene("res://Main/Main.tscn")
-
-
-func _on_Fullscreen_toggled(button_pressed:bool)->void:
-	OS.window_fullscreen = button_pressed
+func _input(event:InputEvent)->void:
+	if event is InputEventKey or event is InputEventMouseButton:
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene("res://Main/Menu.tscn")

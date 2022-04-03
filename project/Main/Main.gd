@@ -83,7 +83,6 @@ func _on_LoadTimer_timeout()->void:
 func _remove_tile(tile_position:Vector2)->void:
 	_tilemap.set_cellv(tile_position, EMPTY)
 	_hud.increment_repute()
-	_cursor_manager.empty()
 	for x in 4:
 		var ring_name := "_" + str(x + 1) + "_spaces"
 		var keys = get(ring_name).get_keys() as Array
@@ -146,6 +145,7 @@ func _check_for_plant(map_position:Vector2, mouse := true)->void:
 	if _tilemap.get_cellv(map_position) > INITIAL_TILES:
 		if mouse:
 			_loaded = false
+			_cursor_manager.empty()
 		_load_timer.start(_load_time)
 		_remove_tile(map_position)
 		_check_for_loose_tiles(map_position)

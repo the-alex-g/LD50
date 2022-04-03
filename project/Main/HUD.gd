@@ -55,3 +55,13 @@ func _on_Flask_pressed()->void:
 func _on_Agent_pressed()->void:
 	emit_signal("spawn_agent")
 	_update_repute(_repute - AGENT_COST)
+
+
+func _on_Menu_pressed()->void:
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://Main/Menu.tscn")
+
+
+func _on_PlayAgain_pressed()->void:
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://Main/Main.tscn")
