@@ -4,6 +4,7 @@ signal game_over
 
 const PLANT_TIME_STEP := 1.01
 const REFILL_TIME_STEP := 1.5
+const EMPTY := -1
 
 export var _plant_time := 1.0
 export var _load_time := 3.0
@@ -35,19 +36,11 @@ func _input(event:InputEvent)->void:
 		if _loaded:
 			var mouse_position := get_global_mouse_position()
 			var map_mouse_position = _tilemap.world_to_map(mouse_position) as Vector2
-			if _tilemap.get_cellv(map_mouse_position) != -1:
+			if _tilemap.get_cellv(map_mouse_position) != EMPTY:
 				_loaded = false
 				_load_timer.start(_load_time)
-				_tilemap.set_cellv(map_mouse_position, -1)
-				_hud.increment_repute()
-				_cursor_manager.empty()
-				for x in 4:
-					var ring_name := "_" + str(x + 1) + "_spaces"
-					var keys = get(ring_name).get_keys() as Array
-					if keys.has(map_mouse_position):
-						get(ring_name).empty(map_mouse_position)
-						break
-
+				_remove_tile(map_mouse_position)
+				_check_for_loose_tiles(map_mouse_position)
 
 
 func _on_PlantAdvanceTimer_timeout()->void:
@@ -83,6 +76,37 @@ func _add_plant()->void:
 
 func _on_LoadTimer_timeout()->void:
 	_loaded = true
+
+
+func _remove_tile(tile_position:Vector2)->void:
+	_tilemap.set_cellv(tile_position, EMPTY)
+	_hud.increment_repute()
+	_cursor_manager.empty()
+	for x in 4:
+		var ring_name := "_" + str(x + 1) + "_spaces"
+		var keys = get(ring_name).get_keys() as Array
+		if keys.has(tile_position):
+			get(ring_name).empty(tile_position)
+			break
+
+
+func _check_for_loose_tiles(tile_position:Vector2)->void:
+	var left_side := tile_position + Vector2.LEFT
+	var right_side := tile_position + Vector2.RIGHT
+	var top := tile_position + Vector2.UP
+	var bottom := tile_position + Vector2.DOWN
+	_evaluate_potentially_loose_tile(left_side, true)
+	_evaluate_potentially_loose_tile(right_side, true)
+	_evaluate_potentially_loose_tile(top)
+	_evaluate_potentially_loose_tile(bottom)
+
+
+func _evaluate_potentially_loose_tile(tile_position:Vector2, vertical_check := false)->void:
+	var first_position := tile_position + (Vector2.UP if vertical_check else Vector2.LEFT)
+	var second_position := tile_position + (Vector2.DOWN if vertical_check else Vector2.RIGHT)
+	if _tilemap.get_cellv(tile_position) != EMPTY and tile_position.x != 8 and tile_position.x != 0 and tile_position.y != 8 and tile_position.y != 0:
+		if _tilemap.get_cellv(first_position) == EMPTY and _tilemap.get_cellv(second_position) == EMPTY:
+			_remove_tile(tile_position)
 
 
 func _on_Main_game_over()->void:
