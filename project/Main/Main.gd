@@ -106,7 +106,7 @@ func _check_for_loose_tiles(tile_position:Vector2)->void:
 func _evaluate_potentially_loose_tile(tile_position:Vector2, vertical_check := false)->void:
 	var first_position := tile_position + (Vector2.UP if vertical_check else Vector2.LEFT)
 	var second_position := tile_position + (Vector2.DOWN if vertical_check else Vector2.RIGHT)
-	if _tilemap.get_cellv(tile_position) != EMPTY and tile_position.x != 8 and tile_position.x != 0 and tile_position.y != 8 and tile_position.y != 0:
+	if _tilemap.get_cellv(tile_position) > INITIAL_TILES and tile_position.x != 8 and tile_position.x != 0 and tile_position.y != 8 and tile_position.y != 0:
 		if _tilemap.get_cellv(first_position) == EMPTY and _tilemap.get_cellv(second_position) == EMPTY:
 			_remove_tile(tile_position)
 
@@ -139,12 +139,14 @@ func _on_HUD_spawn_agent()->void:
 
 func _on_agent_probe(agent_position:Vector2)->void:
 	var position_on_map = _tilemap.world_to_map(agent_position) as Vector2
-	_check_for_plant(position_on_map)
+	_check_for_plant(position_on_map, false)
 
 
-func _check_for_plant(map_position:Vector2)->void:
-	if _tilemap.get_cellv(map_position) >= INITIAL_TILES:
-		_loaded = false
+func _check_for_plant(map_position:Vector2, mouse := true)->void:
+	if _tilemap.get_cellv(map_position) > INITIAL_TILES:
+		if mouse:
+			_loaded = false
 		_load_timer.start(_load_time)
 		_remove_tile(map_position)
 		_check_for_loose_tiles(map_position)
+
