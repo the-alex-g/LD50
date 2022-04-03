@@ -26,3 +26,9 @@ script = ExtResource( 1 )
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 format = 1
+
+[node name="PlantAdvanceTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="PlantAdvanceTimer" to="." method="_on_PlantAdvanceTimer_timeout"]
