@@ -123,8 +123,8 @@ text = "Play Again"
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="custom_pressed" from="Background/VBoxContainer/Agent" to="." method="_on_Agent_pressed"]
-[connection signal="custom_pressed" from="Background/VBoxContainer/Flask" to="." method="_on_Flask_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Agent" to="." method="_on_Agent_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Flask" to="." method="_on_Flask_pressed"]
 [connection signal="custom_pressed" from="GameOverPanel/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
 [connection signal="custom_pressed" from="GameOverPanel/VBoxContainer/PlayAgain" to="." method="_on_PlayAgain_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
