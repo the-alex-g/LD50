@@ -8,6 +8,7 @@ var _3_spaces := RingDictionary.new()
 var _4_spaces := RingDictionary.new()
 var _plant_time := 2.0
 var _game_over := false
+var _loaded := true
 
 onready var _tilemap = $TileMap as TileMap
 onready var _plant_timer = $PlantAdvanceTimer as Timer
@@ -20,22 +21,20 @@ func _ready()->void:
 		get(list_name).generate(9 - x * 2, x)
 
 
-func _generate_spaces(side_length:int, offset:int)->Array:
-	var array := []
-	
-	for x in side_length:
-		if not array.has(Vector2(x, 0) + Vector2(offset, offset)):
-			array.append(Vector2(x, 0) + Vector2(offset, offset))
-		if not array.has(Vector2(x, side_length - 1) + Vector2(offset, offset)):
-			array.append(Vector2(x, side_length - 1) + Vector2(offset, offset))
-		if not array.has(Vector2(0, x) + Vector2(offset, offset)):
-			array.append(Vector2(0, x) + Vector2(offset, offset))
-		if not array.has(Vector2(side_length - 1, x) + Vector2(offset, offset)):
-			array.append(Vector2(side_length - 1, x) + Vector2(offset, offset))
-	if not array.has(Vector2(side_length, side_length)):
-		array.append(Vector2(side_length, side_length))
-	
-	return array
+func _input(event:InputEvent)->void:
+	if event is InputEventMouseButton:
+		if _loaded:
+			var mouse_position := get_global_mouse_position()
+			var map_mouse_position = _tilemap.world_to_map(mouse_position) as Vector2
+			if _tilemap.get_cellv(map_mouse_position) != -1:
+				#_loaded = false
+				_tilemap.set_cellv(map_mouse_position, -1)
+				for x in 4:
+					var ring_name := "_" + str(x + 1) + "_spaces"
+					var keys = get(ring_name).get_keys() as Array
+					if keys.has(map_mouse_position):
+						get(ring_name).empty(map_mouse_position)
+						break
 
 
 
