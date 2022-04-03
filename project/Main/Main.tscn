@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=1]
-[ext_resource path="res://Main/tile_8.png" type="Texture" id=2]
+[ext_resource path="res://Main/HoleImages/HoleTexture.tres" type="Texture" id=2]
 [ext_resource path="res://Mouse/CursorManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Main/HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Main/tile_7.png" type="Texture" id=6]
@@ -21,7 +21,7 @@
 1/shape_one_way_margin = 0.0
 1/shapes = [  ]
 1/z_index = 0
-2/name = "tile_8.png 2"
+2/name = "HoleTexture.tres 2"
 2/texture = ExtResource( 2 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
@@ -56,7 +56,6 @@ wait_time = 3.0
 one_shot = true
 
 [node name="CursorManager" parent="." instance=ExtResource( 3 )]
-position = Vector2( 144, 144 )
 
 [connection signal="game_over" from="." to="." method="_on_Main_game_over"]
 [connection signal="game_over" from="." to="HUD" method="_on_Main_game_over"]

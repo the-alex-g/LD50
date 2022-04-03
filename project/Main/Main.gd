@@ -4,7 +4,7 @@ signal game_over
 
 const PLANT_TIME_STEP := 1.01
 const REFILL_TIME_STEP := 1.5
-const EMPTY := 0
+const EMPTY := 1
 const INITIAL_TILES := 2
 
 export var _plant_time := 1.0
