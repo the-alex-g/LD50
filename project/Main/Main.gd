@@ -146,7 +146,7 @@ func _check_for_plant(map_position:Vector2, mouse := true)->void:
 		if mouse:
 			_loaded = false
 			_cursor_manager.empty()
-		_load_timer.start(_load_time)
+			_load_timer.start(_load_time)
 		_remove_tile(map_position)
 		_check_for_loose_tiles(map_position)
 
