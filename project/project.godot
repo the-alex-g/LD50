@@ -30,6 +30,10 @@ config/name="The Poisoner"
 run/main_scene="res://Main/Splashscreen.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Jukebox="*res://Jukebox.tscn"
+
 [display]
 
 window/size/width=288
