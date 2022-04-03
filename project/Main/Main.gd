@@ -4,7 +4,8 @@ signal game_over
 
 const PLANT_TIME_STEP := 1.01
 const REFILL_TIME_STEP := 1.5
-const EMPTY := -1
+const EMPTY := 0
+const INITIAL_TILES := 2
 
 export var _plant_time := 1.0
 export var _load_time := 3.0
@@ -15,6 +16,7 @@ var _3_spaces := RingDictionary.new()
 var _4_spaces := RingDictionary.new()
 var _game_over := false
 var _loaded := true
+var _plants_added := 0
 
 onready var _tilemap = $TileMap as TileMap
 onready var _plant_timer = $PlantAdvanceTimer as Timer
@@ -62,7 +64,11 @@ func _add_plant()->void:
 			var plant_position = empty_positions[randi() % empty_positions.size()] as Vector2
 			get(ring_name).fill(plant_position)
 			
-			_tilemap.set_cellv(plant_position, 0)
+			_plants_added += 1
+			var tile_index = _plants_added + INITIAL_TILES
+			_tilemap.tile_set.create_tile(tile_index)
+			_tilemap.tile_set.tile_set_texture(tile_index, _create_texture())
+			_tilemap.set_cellv(plant_position, tile_index)
 			
 			running = false
 		
@@ -117,3 +123,12 @@ func _on_HUD_reduce_refill_time()->void:
 	if _load_time >= 1.0:
 		_load_time /= REFILL_TIME_STEP
 		_cursor_manager.update_anim_time(_load_time)
+
+
+func _create_texture()->AnimatedTexture:
+	var texture := AnimatedTexture.new()
+	texture.frames = 7
+	for x in 7:
+		texture.set_frame_texture(x, load("res://Main/PlantImages/tile_" + str(x) + ".png"))
+	texture.oneshot = true
+	return texture

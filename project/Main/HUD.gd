@@ -5,6 +5,8 @@ signal reduce_refill_time()
 
 const FLASK_COST := 2
 const AGENT_COST := 3
+const REPUTE_MODIFIER := 1
+const MIN_TIME_TO_LOSE := 57
 
 var _duration := 0
 var _game_over := false
@@ -14,6 +16,8 @@ onready var _repute_tracker = $Background/PointTracker as Label
 onready var _time_tracker = $Background/TimeTracker as Label
 onready var _flask_button = $Background/VBoxContainer/Flask as Button
 onready var _agent_button = $Background/VBoxContainer/Agent as Button
+onready var _score_tracker = $GameOverPanel/VBoxContainer/Score as Label
+onready var _game_over_panel = $GameOverPanel as Panel
 
 
 func _ready()->void:
@@ -39,6 +43,8 @@ func _on_Timer_timeout()->void:
 
 func _on_Main_game_over()->void:
 	_game_over = true
+	_game_over_panel.visible = true
+	_score_tracker.text = "Your score is " + str(_duration + _repute * REPUTE_MODIFIER - MIN_TIME_TO_LOSE)
 
 
 func _on_Flask_pressed()->void:

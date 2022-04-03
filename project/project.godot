@@ -9,7 +9,7 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "CanvasLayer",
 "class": "CursorManager",
 "language": "GDScript",
 "path": "res://Mouse/CursorManager.gd"

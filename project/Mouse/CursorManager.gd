@@ -1,7 +1,7 @@
 class_name CursorManager
-extends Node2D
+extends CanvasLayer
 
-onready var _mouse_follower := $AnimatedSprite
+onready var _mouse_follower = $AnimatedSprite as AnimatedSprite
 
 
 func _ready()->void:
@@ -9,7 +9,7 @@ func _ready()->void:
 
 
 func _process(_delta:float)->void:
-	var mouse_position := get_global_mouse_position()
+	var mouse_position = _mouse_follower.get_global_mouse_position() as Vector2
 	_mouse_follower.global_position = mouse_position
 
 
