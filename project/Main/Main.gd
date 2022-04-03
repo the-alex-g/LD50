@@ -1,6 +1,8 @@
 extends Node2D
 
-const PLANT_TIME_STEP := 1.1
+signal game_over
+
+const PLANT_TIME_STEP := 1.01
 
 export var _plant_time := 1.0
 export var _load_time := 3.0
@@ -17,6 +19,7 @@ onready var _tilemap = $TileMap as TileMap
 onready var _plant_timer = $PlantAdvanceTimer as Timer
 onready var _load_timer = $LoadTimer as Timer
 onready var _cursor_manager = $CursorManager as CursorManager
+onready var _hud = $HUD
 
 
 func _ready()->void:
@@ -37,6 +40,7 @@ func _input(event:InputEvent)->void:
 				_load_timer.start(_load_time)
 				_tilemap.set_cellv(map_mouse_position, -1)
 				_plants_poisoned += 1
+				_hud.update_repute(_plants_poisoned)
 				_cursor_manager.empty()
 				for x in 4:
 					var ring_name := "_" + str(x + 1) + "_spaces"
@@ -74,9 +78,13 @@ func _add_plant()->void:
 			if ring_index < 4:
 				ring_index += 1
 			elif ring_index == 4:
-				_game_over = true
+				emit_signal("game_over")
 				running = false
 
 
 func _on_LoadTimer_timeout()->void:
 	_loaded = true
+
+
+func _on_Main_game_over()->void:
+	_game_over = true

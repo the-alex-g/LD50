@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=7 format=2]
+
+[ext_resource path="res://Theme/DefaultFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Theme/Buttons/normal.tres" type="StyleBox" id=2]
+[ext_resource path="res://Theme/Buttons/hover.tres" type="StyleBox" id=3]
+[ext_resource path="res://Theme/Buttons/pressed.tres" type="StyleBox" id=4]
+[ext_resource path="res://Theme/panel.tres" type="StyleBox" id=5]
+[ext_resource path="res://Theme/Buttons/disabled.tres" type="StyleBox" id=6]
+
+[resource]
+default_font = ExtResource( 1 )
+Button/styles/disabled = ExtResource( 6 )
+Button/styles/hover = ExtResource( 3 )
+Button/styles/normal = ExtResource( 2 )
+Button/styles/pressed = ExtResource( 4 )
+Panel/styles/panel = ExtResource( 5 )
