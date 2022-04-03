@@ -31,4 +31,9 @@ format = 1
 one_shot = true
 autostart = true
 
+[node name="LoadTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="timeout" from="PlantAdvanceTimer" to="." method="_on_PlantAdvanceTimer_timeout"]
+[connection signal="timeout" from="LoadTimer" to="." method="_on_LoadTimer_timeout"]

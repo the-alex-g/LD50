@@ -3,6 +3,7 @@ extends Node2D
 const PLANT_TIME_STEP := 1.1
 
 export var _plant_time := 1.0
+export var _load_time := 3.0
 
 var _1_spaces := RingDictionary.new()
 var _2_spaces := RingDictionary.new()
@@ -13,6 +14,7 @@ var _loaded := true
 
 onready var _tilemap = $TileMap as TileMap
 onready var _plant_timer = $PlantAdvanceTimer as Timer
+onready var _load_timer = $LoadTimer as Timer
 
 
 func _ready()->void:
@@ -28,7 +30,8 @@ func _input(event:InputEvent)->void:
 			var mouse_position := get_global_mouse_position()
 			var map_mouse_position = _tilemap.world_to_map(mouse_position) as Vector2
 			if _tilemap.get_cellv(map_mouse_position) != -1:
-				#_loaded = false
+				_loaded = false
+				_load_timer.start(_load_time)
 				_tilemap.set_cellv(map_mouse_position, -1)
 				for x in 4:
 					var ring_name := "_" + str(x + 1) + "_spaces"
@@ -53,21 +56,22 @@ func _add_plant()->void:
 	while running:
 		var ring_name := "_" + str(ring_index) + "_spaces"
 		
-	
 		if get(ring_name).is_not_full():
 			var empty_positions = get(ring_name).get_empty_keys() as Array
-			print(empty_positions.size())
 			var plant_position = empty_positions[randi() % empty_positions.size()] as Vector2
 			get(ring_name).fill(plant_position)
 			
 			_tilemap.set_cellv(plant_position, 0)
 			
 			running = false
-
+		
 		else:
 			if ring_index < 4:
 				ring_index += 1
 			elif ring_index == 4:
 				_game_over = true
 				running = false
-				print("over")
+
+
+func _on_LoadTimer_timeout()->void:
+	_loaded = true
