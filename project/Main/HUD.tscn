@@ -75,4 +75,6 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[connection signal="pressed" from="Background/VBoxContainer/Agent" to="." method="_on_Agent_pressed"]
+[connection signal="pressed" from="Background/VBoxContainer/Flask" to="." method="_on_Flask_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -44,5 +44,6 @@ position = Vector2( 144, 144 )
 
 [connection signal="game_over" from="." to="." method="_on_Main_game_over"]
 [connection signal="game_over" from="." to="HUD" method="_on_Main_game_over"]
+[connection signal="reduce_refill_time" from="HUD" to="." method="_on_HUD_reduce_refill_time"]
 [connection signal="timeout" from="PlantAdvanceTimer" to="." method="_on_PlantAdvanceTimer_timeout"]
 [connection signal="timeout" from="LoadTimer" to="." method="_on_LoadTimer_timeout"]

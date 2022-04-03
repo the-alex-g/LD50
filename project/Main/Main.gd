@@ -3,6 +3,7 @@ extends Node2D
 signal game_over
 
 const PLANT_TIME_STEP := 1.01
+const REFILL_TIME_STEP := 1.5
 
 export var _plant_time := 1.0
 export var _load_time := 3.0
@@ -11,7 +12,6 @@ var _1_spaces := RingDictionary.new()
 var _2_spaces := RingDictionary.new()
 var _3_spaces := RingDictionary.new()
 var _4_spaces := RingDictionary.new()
-var _plants_poisoned := 0
 var _game_over := false
 var _loaded := true
 
@@ -39,8 +39,7 @@ func _input(event:InputEvent)->void:
 				_loaded = false
 				_load_timer.start(_load_time)
 				_tilemap.set_cellv(map_mouse_position, -1)
-				_plants_poisoned += 1
-				_hud.update_repute(_plants_poisoned)
+				_hud.increment_repute()
 				_cursor_manager.empty()
 				for x in 4:
 					var ring_name := "_" + str(x + 1) + "_spaces"
@@ -88,3 +87,9 @@ func _on_LoadTimer_timeout()->void:
 
 func _on_Main_game_over()->void:
 	_game_over = true
+
+
+func _on_HUD_reduce_refill_time()->void:
+	if _load_time >= 1.0:
+		_load_time /= REFILL_TIME_STEP
+		_cursor_manager.update_anim_time(_load_time)
