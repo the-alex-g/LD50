@@ -60,7 +60,6 @@ margin_bottom = 54.0
 text = "Fullscreen"
 
 [node name="CursorManager" parent="." instance=ExtResource( 1 )]
-position = Vector2( 144, 144 )
 
 [connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_Button_pressed"]
 [connection signal="toggled" from="VBoxContainer/Fullscreen" to="." method="_on_Fullscreen_toggled"]

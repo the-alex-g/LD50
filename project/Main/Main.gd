@@ -38,11 +38,7 @@ func _input(event:InputEvent)->void:
 		if _loaded:
 			var mouse_position := get_global_mouse_position()
 			var map_mouse_position = _tilemap.world_to_map(mouse_position) as Vector2
-			if _tilemap.get_cellv(map_mouse_position) != EMPTY:
-				_loaded = false
-				_load_timer.start(_load_time)
-				_remove_tile(map_mouse_position)
-				_check_for_loose_tiles(map_mouse_position)
+			_check_for_plant(map_mouse_position)
 
 
 func _on_PlantAdvanceTimer_timeout()->void:
@@ -132,3 +128,23 @@ func _create_texture()->AnimatedTexture:
 		texture.set_frame_texture(x, load("res://Main/PlantImages/tile_" + str(x) + ".png"))
 	texture.oneshot = true
 	return texture
+
+
+func _on_HUD_spawn_agent()->void:
+	var agent = load("res://Agent/Agent.tscn").instance() as Node2D
+	agent.position = Vector2(144, 144)
+	agent.connect("probe", self, "_on_agent_probe")
+	add_child(agent)
+
+
+func _on_agent_probe(agent_position:Vector2)->void:
+	var position_on_map = _tilemap.world_to_map(agent_position) as Vector2
+	_check_for_plant(position_on_map)
+
+
+func _check_for_plant(map_position:Vector2)->void:
+	if _tilemap.get_cellv(map_position) >= INITIAL_TILES:
+		_loaded = false
+		_load_timer.start(_load_time)
+		_remove_tile(map_position)
+		_check_for_loose_tiles(map_position)
