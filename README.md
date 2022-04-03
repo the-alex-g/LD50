@@ -1,5 +1,5 @@
 # The Poisoner
-This game was made for the 50th Ludum Dare game jam.
+This game was made for the 50th Ludum Dare game jam, which was themed "Delay the Inevitable".
 
 You are a poisoner trying to poison all those pesky plants in your empty garden plot. Click on plants to destroy them. You can summon Agents who kill plants for you, but they only live for a limited amount of time. You can also buy flask upgrades to decrease your reload time. Unfortunately for you, the plants are speeding up, and you can't stop them forever...
 
