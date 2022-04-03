@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://test.png" type="Texture" id=2]
+[ext_resource path="res://Mouse/CursorManager.tscn" type="PackedScene" id=3]
 
 [sub_resource type="TileSet" id=1]
 0/name = "test.png 0"
@@ -34,6 +35,8 @@ autostart = true
 [node name="LoadTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="CursorManager" parent="." instance=ExtResource( 3 )]
 
 [connection signal="timeout" from="PlantAdvanceTimer" to="." method="_on_PlantAdvanceTimer_timeout"]
 [connection signal="timeout" from="LoadTimer" to="." method="_on_LoadTimer_timeout"]

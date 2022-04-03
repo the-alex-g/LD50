@@ -9,19 +9,22 @@ var _1_spaces := RingDictionary.new()
 var _2_spaces := RingDictionary.new()
 var _3_spaces := RingDictionary.new()
 var _4_spaces := RingDictionary.new()
+var _plants_poisoned := 0
 var _game_over := false
 var _loaded := true
 
 onready var _tilemap = $TileMap as TileMap
 onready var _plant_timer = $PlantAdvanceTimer as Timer
 onready var _load_timer = $LoadTimer as Timer
+onready var _cursor_manager = $CursorManager as CursorManager
 
 
 func _ready()->void:
 	randomize()
-	for x in 4: # 0-3
+	for x in 4:
 		var list_name := "_" + str(x + 1) + "_spaces"
 		get(list_name).generate(9 - x * 2, x)
+	_cursor_manager.update_anim_time(_load_time)
 
 
 func _input(event:InputEvent)->void:
@@ -33,6 +36,8 @@ func _input(event:InputEvent)->void:
 				_loaded = false
 				_load_timer.start(_load_time)
 				_tilemap.set_cellv(map_mouse_position, -1)
+				_plants_poisoned += 1
+				_cursor_manager.empty()
 				for x in 4:
 					var ring_name := "_" + str(x + 1) + "_spaces"
 					var keys = get(ring_name).get_keys() as Array
