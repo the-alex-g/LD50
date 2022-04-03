@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Theme/theme.tres" type="Theme" id=1]
 [ext_resource path="res://Main/HUD.gd" type="Script" id=2]
 [ext_resource path="res://Theme/Large.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Main/CustomClasses/SoundButton.tscn" type="PackedScene" id=4]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 0
@@ -29,15 +30,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Agent" type="Button" parent="Background/VBoxContainer"]
+[node name="Agent" parent="Background/VBoxContainer" instance=ExtResource( 4 )]
 margin_right = 34.0
 margin_bottom = 25.0
 text = "Agent"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="Flask" type="Button" parent="Background/VBoxContainer"]
+[node name="Flask" parent="Background/VBoxContainer" instance=ExtResource( 4 )]
 margin_left = 38.0
 margin_right = 69.0
 margin_bottom = 25.0
@@ -116,23 +114,17 @@ margin_bottom = 73.0
 text = "Your score was ???"
 align = 1
 
-[node name="Menu" type="Button" parent="GameOverPanel/VBoxContainer"]
-margin_top = 77.0
-margin_right = 144.0
-margin_bottom = 102.0
-text = "Back to Menu"
+[node name="Menu" parent="GameOverPanel/VBoxContainer" instance=ExtResource( 4 )]
+text = "Menu"
 
-[node name="PlayAgain" type="Button" parent="GameOverPanel/VBoxContainer"]
-margin_top = 106.0
-margin_right = 144.0
-margin_bottom = 131.0
+[node name="PlayAgain" parent="GameOverPanel/VBoxContainer" instance=ExtResource( 4 )]
 text = "Play Again"
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="pressed" from="Background/VBoxContainer/Agent" to="." method="_on_Agent_pressed"]
-[connection signal="pressed" from="Background/VBoxContainer/Flask" to="." method="_on_Flask_pressed"]
-[connection signal="pressed" from="GameOverPanel/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
-[connection signal="pressed" from="GameOverPanel/VBoxContainer/PlayAgain" to="." method="_on_PlayAgain_pressed"]
+[connection signal="custom_pressed" from="Background/VBoxContainer/Agent" to="." method="_on_Agent_pressed"]
+[connection signal="custom_pressed" from="Background/VBoxContainer/Flask" to="." method="_on_Flask_pressed"]
+[connection signal="custom_pressed" from="GameOverPanel/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="custom_pressed" from="GameOverPanel/VBoxContainer/PlayAgain" to="." method="_on_PlayAgain_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

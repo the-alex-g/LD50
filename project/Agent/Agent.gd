@@ -27,6 +27,7 @@ func _move()->void:
 	_moves += 1
 	if _moves > MAX_MOVES:
 		_sprite.play("Demise")
+		$Squish.play()
 		_dead = true
 	else:
 		var index := randi()%4
