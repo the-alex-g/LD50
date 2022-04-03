@@ -5,5 +5,10 @@ You are a poisoner trying to poison all those pesky plants in your empty garden 
 
 _pro tip: after around three flask upgrades, they no longer have any significant effect._
 
+[Play it here!](https://the-alex-g.github.io/LD50/)
+
 ### Third-Party Assets
 [Quintessential-Regular](https://fonts.google.com/specimen/Quintessential) font, published under the Open Font License (OFL). A copy of this license is included in the project.
+
+### Other Thoughts
+I think this is the first fully-functional LDJam game I have made in quite a while.
